@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Form } from "react-router-dom";
 
 export default function Home() {
   const [nickname, setNickname] = useState("");
@@ -23,6 +22,8 @@ export default function Home() {
     }
 
     setErrorMsg("");
+
+    fetch("/api/login", { method: "POST" });
   };
 
   const isNicknameValid = (nickname: string) => {
@@ -51,32 +52,30 @@ export default function Home() {
               messages
             </CardDescription>
           </CardHeader>
-          <Form method="POST" action="/">
-            <CardContent>
-              <Label className="font-bold" htmlFor="nickname">
-                Nickname
-              </Label>
-              <Input
-                id="nickname"
-                name="nickname"
-                placeholder="John Doe"
-                value={nickname}
-                onChange={(e) => validateAndUpdateNickname(e.target.value)}
-              />
-              {errorMsg.length > 0 && (
-                <p className="text-red-500 text-sm my-2">{errorMsg}</p>
-              )}
-            </CardContent>
-            <CardFooter>
-              <Button
-                className="w-full"
-                onClick={handleSubmit}
-                disabled={!isNicknameValid(nickname)}
-              >
-                Submit
-              </Button>
-            </CardFooter>
-          </Form>
+          <CardContent>
+            <Label className="font-bold" htmlFor="nickname">
+              Nickname
+            </Label>
+            <Input
+              id="nickname"
+              name="nickname"
+              placeholder="John Doe"
+              value={nickname}
+              onChange={(e) => validateAndUpdateNickname(e.target.value)}
+            />
+            {errorMsg.length > 0 && (
+              <p className="text-red-500 text-sm my-2">{errorMsg}</p>
+            )}
+          </CardContent>
+          <CardFooter>
+            <Button
+              className="w-full"
+              onClick={handleSubmit}
+              disabled={!isNicknameValid(nickname)}
+            >
+              Submit
+            </Button>
+          </CardFooter>
         </Card>
       </div>
     </div>
