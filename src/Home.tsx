@@ -15,7 +15,7 @@ export default function Home() {
   const [nickname, setNickname] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = () => {
+  const handleJoin = () => {
     if (nickname.length < 4) {
       setErrorMsg("The nickname is too short");
       return;
@@ -23,7 +23,7 @@ export default function Home() {
 
     setErrorMsg("");
 
-    fetch("/api/login", { method: "POST" });
+    fetch("/api/join", { method: "POST" });
   };
 
   const isNicknameValid = (nickname: string) => {
@@ -70,10 +70,10 @@ export default function Home() {
           <CardFooter>
             <Button
               className="w-full"
-              onClick={handleSubmit}
+              onClick={handleJoin}
               disabled={!isNicknameValid(nickname)}
             >
-              Submit
+              Join
             </Button>
           </CardFooter>
         </Card>
