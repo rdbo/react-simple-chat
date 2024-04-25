@@ -4,7 +4,6 @@ import App from "./App.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./Home.tsx";
-import Chat from "./Chat.tsx";
 import Error from "./Error.tsx";
 
 const router = createBrowserRouter([
@@ -17,10 +16,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      {
-        path: "/chat",
-        element: <Chat /> 
-      }
     ],
   },
 ]);

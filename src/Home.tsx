@@ -9,21 +9,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Nickname, NicknameData } from "./App";
 
 export default function Home() {
-  const [nickname, setNickname] = useState("");
+  const [formNickname, setFormNickname] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const { nickname, setNickname } = useContext(Nickname) as NicknameData;
 
   const handleJoin = () => {
-    if (nickname.length < 4) {
+    if (formNickname.length < 4) {
       setErrorMsg("The nickname is too short");
       return;
     }
 
     setErrorMsg("");
-
-    fetch("/api/join", { method: "POST" });
+    setNickname(formNickname);
   };
 
   const isNicknameValid = (nickname: string) => {
@@ -32,12 +33,12 @@ export default function Home() {
 
   const validateAndUpdateNickname = (newNickname?: string) => {
     if (!newNickname) {
-      setNickname("");
+      setFormNickname("");
       return;
     }
 
     if (isNicknameValid(newNickname)) {
-      setNickname(newNickname);
+      setFormNickname(newNickname);
     }
   };
 
@@ -60,7 +61,7 @@ export default function Home() {
               id="nickname"
               name="nickname"
               placeholder="John Doe"
-              value={nickname}
+              value={formNickname}
               onChange={(e) => validateAndUpdateNickname(e.target.value)}
             />
             {errorMsg.length > 0 && (
@@ -71,7 +72,7 @@ export default function Home() {
             <Button
               className="w-full"
               onClick={handleJoin}
-              disabled={!isNicknameValid(nickname)}
+              disabled={!isNicknameValid(formNickname)}
             >
               Join
             </Button>
