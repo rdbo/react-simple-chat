@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Form } from "react-router-dom";
 
 export default function Home() {
   const [nickname, setNickname] = useState("");
@@ -50,7 +51,7 @@ export default function Home() {
               messages
             </CardDescription>
           </CardHeader>
-          <form method="POST" action="/">
+          <Form method="POST" action="/">
             <CardContent>
               <Label className="font-bold" htmlFor="nickname">
                 Nickname
@@ -75,7 +76,7 @@ export default function Home() {
                 Submit
               </Button>
             </CardFooter>
-          </form>
+          </Form>
         </Card>
       </div>
     </div>
