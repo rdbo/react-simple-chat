@@ -12,6 +12,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class MessageSocketHandler(tornado.websocket.WebSocketHandler):
     clients = set()
+    backlog = []
 
     def open(self):
         MessageSocketHandler.clients.add(self)
@@ -20,8 +21,9 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         print("RECEIVED MESSAGE:", message)
         if message == "get_backlog":
-            print("SENT BACKLOG")
-            self.write_message({ "nickname": 'h4xx0r', "message": 'you got h@xx0r3d n00b' })
+            print("SENDING BACKLOG")
+            for msg in MessageSocketHandler.backlog:
+                self.write_message({ "backlog": MessageSocketHandler.backlog })
             return
 
         try:
@@ -34,6 +36,7 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
                 return
 
             msg = { "nickname": command["nickname"], "message": command["message"] }
+            MessageSocketHandler.backlog.append(msg)
             MessageSocketHandler.send_message(msg)
 
     def on_close(self):

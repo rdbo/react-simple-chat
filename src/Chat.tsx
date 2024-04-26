@@ -9,6 +9,10 @@ interface BacklogEntry {
   message: string;
 }
 
+interface BacklogResponse {
+  backlog: BacklogEntry[];
+}
+
 interface SendMessageCommand {
   nickname: string;
   message: string;
@@ -25,7 +29,6 @@ export default function Chat() {
   const { sendMessage, sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(webSocketUrl, {
     onOpen: () => {
       sendMessage("get_backlog");
-      setBacklog([]);
     },
     shouldReconnect: () => true,
   });
@@ -34,6 +37,11 @@ export default function Chat() {
   useEffect(() => {
     if (lastJsonMessage == null)
       return;
+
+    if (lastJsonMessage.hasOwnProperty("backlog")) {
+      setBacklog((lastJsonMessage as BacklogResponse).backlog);
+      return;
+    }
 
     let newBacklog = [...backlog];
     newBacklog.push(lastJsonMessage as BacklogEntry);
