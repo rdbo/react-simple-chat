@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export interface NicknameData {
   nickname: string;
@@ -10,7 +10,11 @@ export interface NicknameData {
 export const Nickname = createContext<NicknameData | null>(null);
 
 function App() {
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(localStorage.getItem("nickname") || "");
+
+  useEffect(() => {
+    localStorage.setItem("nickname", nickname);
+  }, [nickname])
 
   return (
     <>
