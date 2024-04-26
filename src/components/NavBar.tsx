@@ -18,7 +18,7 @@ export default function NavBar() {
 
   return (
     <div className="px-4 py-2 border-b flex justify-between items-center bg-white dark:bg-zinc-950 dark:text-white dark:border-zinc-800">
-      <h1 className="font-bold text-2xl">react-simple-chat</h1>
+      <h1 className="font-bold text-2xl cursor-pointer" onClick={clearNickname}>react-simple-chat</h1>
       <div className="flex items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
