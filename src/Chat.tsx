@@ -12,7 +12,7 @@ export default function Chat() {
           placeholder="Enter a message"
           className="px-2 py-2 rounded-md grow"
         />
-        <button className="px-2 rounded-full">
+        <button className="ml-2 rounded-full">
           <img src="/assets/images/send-message.png" className="h-12" />
         </button>
       </div>
