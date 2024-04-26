@@ -55,7 +55,7 @@ export default function Chat() {
   };
 
   const sendMessageToServer = () => {
-    if (readyState != ReadyState.OPEN)
+    if (readyState != ReadyState.OPEN || !message)
       return;
 
     let cmd: SendMessageCommand = { nickname: nicknameCtx.nickname, message: message };
