@@ -8,11 +8,14 @@ export default function Chat() {
       <div className="border rounded-lg my-2 grow px-2 py-1">
         <p>hello</p>
       </div>
-      <div className="pb-8 flex">
-        <div className="border grow flex rounded-md">
-          <Input placeholder="Enter a message" className="px-2 py-2 rounded-md grow"/>
-          <button className="border-l px-2">Send</button>
-        </div>
+      <div className="pb-8 flex items-center">
+        <Input
+          placeholder="Enter a message"
+          className="px-2 py-2 rounded-md grow"
+        />
+        <button className="px-2 rounded-full">
+          <img src="/assets/images/send-message.png" className="h-12" />
+        </button>
       </div>
     </div>
   );
