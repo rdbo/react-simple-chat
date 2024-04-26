@@ -27,7 +27,6 @@ export default function Chat() {
     if (lastJsonMessage == null)
       return;
 
-    console.log("MESSAGE: ", lastJsonMessage);
     let newBacklog = [...backlog];
     newBacklog.push(lastJsonMessage as BacklogEntry);
     setBacklog(newBacklog);
