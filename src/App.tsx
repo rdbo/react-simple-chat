@@ -21,12 +21,17 @@ function App() {
       <Nickname.Provider
         value={{ nickname: nickname, setNickname: setNickname }}
       >
-        <header className="sticky top-0">
-          <NavBar />
-        </header>
-        <main>
-          <Outlet />
-        </main>
+        <div className="min-h-screen flex flex-col">
+          <header className="sticky top-0">
+            <NavBar />
+          </header>
+          <main className="grow">
+            <Outlet />
+          </main>
+        </div>
+        <footer className="bg-gray-100 flex justify-center items-center min-h-32">
+          <p className="text-gray-700 font-bold">Copyright (C) Rdbo - 2024</p>
+        </footer>
       </Nickname.Provider>
     </>
   );
