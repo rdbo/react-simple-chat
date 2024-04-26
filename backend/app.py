@@ -18,6 +18,8 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         print("RECEIVED MESSAGE:", message)
+        if message == "get_backlog":
+            self.write_message({ "nickname": 'h4xx0r', "message": 'you got h@xx0r3d n00b' })
 
     def on_close(self):
         MessageSocketHandler.clients.remove(self)
