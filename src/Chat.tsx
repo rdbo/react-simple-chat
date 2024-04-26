@@ -1,3 +1,6 @@
+import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
+
 export default function Chat() {
   return (
     <div className="flex flex-col mt-2 grow mx-8 text-lg">
@@ -7,7 +10,7 @@ export default function Chat() {
       </div>
       <div className="pb-8 flex">
         <div className="border grow flex rounded-md">
-          <input placeholder="Enter a message" className="px-2 py-2 rounded-md grow"/>
+          <Input placeholder="Enter a message" className="px-2 py-2 rounded-md grow"/>
           <button className="border-l px-2">Send</button>
         </div>
       </div>

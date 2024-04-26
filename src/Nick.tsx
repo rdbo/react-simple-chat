@@ -46,7 +46,7 @@ export default function Nick() {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center grow">
       <div className="w-96 my-20">
         <Card>
           <CardHeader>
