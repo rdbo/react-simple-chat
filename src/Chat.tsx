@@ -3,6 +3,7 @@ import { Textarea } from "./components/ui/textarea";
 
 export default function Chat() {
   const [message, setMessage] = useState("");
+  const webSocketUrl = (window.location.protocol == "https:" ? "wss://" : "ws://") + window.location.host + "/api/websocket";
 
   const sendMessage = () => {
     setMessage("");

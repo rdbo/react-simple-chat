@@ -12,6 +12,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      "/api/websocket": {
+        target: "ws://localhost:5000",
+        ws: true,
+      },
       "/api": "http://localhost:5000",
     },
   },
