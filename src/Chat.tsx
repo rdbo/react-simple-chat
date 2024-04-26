@@ -8,7 +8,9 @@ export default function Chat() {
     (window.location.protocol == "https:" ? "wss://" : "ws://") +
     window.location.host +
     "/api/websocket";
-  const { sendMessage, lastMessage, readyState } = useWebSocket(webSocketUrl);
+  const { sendMessage, lastMessage, readyState } = useWebSocket(webSocketUrl, {
+    shouldReconnect: () => true,
+  });
 
   let connectionStatus: "connected" | "connecting" | "disconnected";
   if (readyState == ReadyState.OPEN) {
