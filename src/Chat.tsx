@@ -29,7 +29,7 @@ export default function Chat() {
       <div className="pb-8 flex items-center">
         <Textarea
           placeholder="Enter a message"
-          className="px-2 py-2 rounded-md grow"
+          className="px-2 py-2 rounded-md grow resize-none"
           value={message}
           onKeyDown={handleKeyDown}
           onChange={(event) => updateMessage(event.target.value)}
