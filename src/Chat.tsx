@@ -90,8 +90,8 @@ export default function Chat() {
         </div>
         <div className="px-2 py-1">
           {backlog.map((entry, index) => (
-            <p key={index}>
-              {entry.nickname}: {entry.message}
+            <p key={index} className="whitespace-pre-line">
+              <span className="text-green-400">{entry.nickname}</span>: {entry.message}
             </p>
           ))}
         </div>
