@@ -3,12 +3,12 @@ import NavBar from "./components/NavBar";
 import { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 
-export interface NicknameData {
+export interface NicknameProps {
   nickname: string;
   setNickname: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Nickname = createContext<NicknameData | null>(null);
+export const Nickname = createContext<NicknameProps | null>(null);
 
 function App() {
   const [nickname, setNickname] = useState(

@@ -1,4 +1,4 @@
-import { Nickname, NicknameData } from "@/App";
+import { Nickname, NicknameProps } from "@/App";
 import { useContext } from "react";
 import { useTheme } from "./theme-provider";
 import {
@@ -11,10 +11,10 @@ import { Button } from "./ui/button";
 import { Moon, Sun } from "lucide-react";
 
 export default function NavBar() {
-  const { nickname, setNickname } = useContext(Nickname) as NicknameData;
+  const nicknameCtx = useContext(Nickname) as NicknameProps;
   const { setTheme } = useTheme();
 
-  const clearNickname = () => setNickname("");
+  const clearNickname = () => nicknameCtx.setNickname("");
 
   return (
     <div className="px-4 py-2 border-b flex justify-between items-center bg-white dark:bg-zinc-950 dark:text-white dark:border-zinc-800">
@@ -41,13 +41,13 @@ export default function NavBar() {
           </DropdownMenuContent>
         </DropdownMenu>
         <div className="ml-2">
-          {nickname ? (
+          {nicknameCtx.nickname ? (
             <button
               onClick={clearNickname}
               className="flex items-center font-bold"
             >
               <img src="/assets/images/user.png" className="h-8 mr-1" />
-              <p>{nickname}</p>
+              <p>{nicknameCtx.nickname}</p>
             </button>
           ) : (
             ""

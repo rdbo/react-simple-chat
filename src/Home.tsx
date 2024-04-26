@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { Nickname, NicknameData } from "./App";
+import { Nickname, NicknameProps } from "./App";
 import Nick from "./Nick";
 import Chat from "./Chat";
 
 export default function Home() 
 {
-  const { nickname, setNickname } = useContext(Nickname) as NicknameData;
+  const nicknameCtx = useContext(Nickname) as NicknameProps;
 
   return (
-    nickname ? <Chat /> : <Nick />
+    nicknameCtx.nickname ? <Chat /> : <Nick />
   );
 }

@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useContext, useState } from "react";
-import { Nickname, NicknameData } from "./App";
+import { Nickname, NicknameProps } from "./App";
 
 export default function Nick() {
   const [formNickname, setFormNickname] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const { nickname, setNickname } = useContext(Nickname) as NicknameData;
+  const nicknameCtx = useContext(Nickname) as NicknameProps;
 
   const handleJoin = () => {
     if (formNickname.length < 4) {
@@ -24,7 +24,7 @@ export default function Nick() {
     }
 
     setErrorMsg("");
-    setNickname(formNickname);
+    nicknameCtx.setNickname(formNickname);
   };
 
   const isNicknameValid = (nickname: string) => {
