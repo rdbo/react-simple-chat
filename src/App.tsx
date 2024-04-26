@@ -25,7 +25,7 @@ function App() {
           <header className="sticky top-0">
             <NavBar />
           </header>
-          <main className="grow">
+          <main className="grow flex">
             <Outlet />
           </main>
         </div>
