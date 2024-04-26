@@ -1,6 +1,13 @@
+import { useState } from "react";
 import { Input } from "./components/ui/input";
 
 export default function Chat() {
+  const [message, setMessage] = useState("");
+
+  const updateMessage = (newMessage: string) => {
+    setMessage(newMessage);
+  };
+
   return (
     <div className="flex flex-col mt-2 grow mx-8 text-lg">
       <h1 className="font-bold text-xl text-center">Messages</h1>
@@ -11,8 +18,10 @@ export default function Chat() {
         <Input
           placeholder="Enter a message"
           className="px-2 py-2 rounded-md grow"
+          value={message}
+          onChange={(event) => updateMessage(event.target.value)}
         />
-        <button className="ml-2 rounded-full">
+        <button className={"ml-2 rounded-full" + (message ? "" : " opacity-50")} disabled={!message}>
           <img src="/assets/images/send-message.png" className="h-12" />
         </button>
       </div>
