@@ -22,23 +22,23 @@ export default function Chat() {
     (window.location.protocol == "https:" ? "wss://" : "ws://") +
     window.location.host +
     "/api/websocket";
-  const { sendMessage, sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(webSocketUrl, {
-    onOpen: () => {
-      sendMessage("get_backlog");
-      setBacklog([]);
-    },
-    shouldReconnect: () => true,
-  });
+  const { sendMessage, sendJsonMessage, lastJsonMessage, readyState } =
+    useWebSocket(webSocketUrl, {
+      onOpen: () => {
+        sendMessage("get_backlog");
+        setBacklog([]);
+      },
+      shouldReconnect: () => true,
+    });
 
   // Update backlog with new messages
   useEffect(() => {
-    if (lastJsonMessage == null)
-      return;
+    if (lastJsonMessage == null) return;
 
     let newBacklog = [...backlog];
     newBacklog.push(lastJsonMessage as BacklogEntry);
     setBacklog(newBacklog);
-  }, [lastJsonMessage])
+  }, [lastJsonMessage]);
 
   let connectionStatus: "connected" | "connecting" | "disconnected";
   if (readyState == ReadyState.OPEN) {
@@ -55,10 +55,12 @@ export default function Chat() {
   };
 
   const sendMessageToServer = () => {
-    if (readyState != ReadyState.OPEN || !message)
-      return;
+    if (readyState != ReadyState.OPEN || !message) return;
 
-    let cmd: SendMessageCommand = { nickname: nicknameCtx.nickname, message: message };
+    let cmd: SendMessageCommand = {
+      nickname: nicknameCtx.nickname,
+      message: message,
+    };
 
     sendJsonMessage(cmd);
     setMessage("");
@@ -90,9 +92,13 @@ export default function Chat() {
         </div>
         <div className="px-2 py-1">
           {backlog.map((entry, index) => (
-            <p key={index}>
-              {entry.nickname}: {entry.message}
-            </p>
+            <textarea
+              rows={1}
+              key={index}
+              defaultValue={entry.nickname + ": " + entry.message}
+              className="bg-transparent resize-none w-full h-max"
+              disabled
+            />
           ))}
         </div>
       </div>

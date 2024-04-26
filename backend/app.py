@@ -21,7 +21,7 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
         print("RECEIVED MESSAGE:", message)
         if message == "get_backlog":
             print("SENT BACKLOG")
-            self.write_message({ "nickname": 'h4xx0r', "message": 'you got h@xx0r3d n00b' })
+            self.write_message({ "nickname": "h4xx0r", "message": "you got h@xx0r3d n00b\n- 1337 h4xx0r" })
             return
 
         try:
