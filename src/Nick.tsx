@@ -37,6 +37,9 @@ export default function Nick() {
       return;
     }
 
+    if (newNickname.length > 32)
+      return;
+
     if (isNicknameValid(newNickname)) {
       setFormNickname(newNickname);
     }
