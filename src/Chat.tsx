@@ -10,6 +10,7 @@ export default function Chat() {
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
+    // TODO: Grow/shrink textarea height
     if (event.key == "Enter" && !event.shiftKey) {
       event.preventDefault();
       sendMessage();
