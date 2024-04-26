@@ -1,8 +1,15 @@
-import { KeyboardEvent, useEffect, useState } from "react";
+import { KeyboardEvent, useContext, useEffect, useState } from "react";
 import { Textarea } from "./components/ui/textarea";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import { Nickname, NicknameProps } from "./App";
 
 interface BacklogEntry {
+  nickname: string;
+  // ip_address: string;
+  message: string;
+}
+
+interface SendMessageCommand {
   nickname: string;
   message: string;
 }
@@ -10,11 +17,12 @@ interface BacklogEntry {
 export default function Chat() {
   const [message, setMessage] = useState("");
   const [backlog, setBacklog] = useState<BacklogEntry[]>([]);
+  const nicknameCtx = useContext(Nickname) as NicknameProps;
   const webSocketUrl =
     (window.location.protocol == "https:" ? "wss://" : "ws://") +
     window.location.host +
     "/api/websocket";
-  const { sendMessage, lastJsonMessage, readyState } = useWebSocket(webSocketUrl, {
+  const { sendMessage, sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(webSocketUrl, {
     onOpen: () => {
       sendMessage("get_backlog");
       setBacklog([]);
@@ -47,6 +55,12 @@ export default function Chat() {
   };
 
   const sendMessageToServer = () => {
+    if (readyState != ReadyState.OPEN)
+      return;
+
+    let cmd: SendMessageCommand = { nickname: nicknameCtx.nickname, message: message };
+
+    sendJsonMessage(cmd);
     setMessage("");
   };
 
@@ -75,8 +89,8 @@ export default function Chat() {
           </p>
         </div>
         <div className="px-2 py-1">
-          {backlog.map((entry) => (
-            <p>
+          {backlog.map((entry, index) => (
+            <p key={index}>
               {entry.nickname}: {entry.message}
             </p>
           ))}

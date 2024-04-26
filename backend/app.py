@@ -2,6 +2,7 @@ import tornado
 import tornado.websocket
 import asyncio
 import os
+import json
 
 static_path = os.path.join(os.path.dirname(__file__), "static")
 
@@ -19,15 +20,29 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         print("RECEIVED MESSAGE:", message)
         if message == "get_backlog":
+            print("SENT BACKLOG")
             self.write_message({ "nickname": 'h4xx0r', "message": 'you got h@xx0r3d n00b' })
+            return
+
+        try:
+            command = json.loads(message)
+        except:
+            return
+
+        if "nickname" in command and "message" in command:
+            if len(command["nickname"]) == 0 or len(command["message"]) == 0:
+                return
+
+            msg = { "nickname": command["nickname"], "message": command["message"] }
+            MessageSocketHandler.send_message(msg)
 
     def on_close(self):
         MessageSocketHandler.clients.remove(self)
         print("WEBSOCKET CLOSED")
 
-    @classmethod
-    def send_message(clients, message):
-        for client in clients:
+    @staticmethod
+    def send_message(message):
+        for client in MessageSocketHandler.clients:
             client.write_message(message)
 
 def make_app():
