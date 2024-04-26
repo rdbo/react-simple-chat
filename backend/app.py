@@ -1,17 +1,23 @@
-from flask import Flask, send_file, send_from_directory
+import tornado
+import asyncio
+import os
 
-app = Flask("react-simple-chat")
+static_path = os.path.join(os.path.dirname(__file__), "static")
 
-@app.route("/assets/<path:path>", methods = ["GET", "POST"])
-def assets(path):
-    return send_from_directory("static/assets", path)
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write(open(f"{static_path}/index.html", "r").read())
 
-@app.route("/")
-def index():
-    return send_file("static/index.html")
+def make_app():
+    return tornado.web.Application([
+        (r"/(assets/.*)", tornado.web.StaticFileHandler, dict(path=static_path)),
+        (r"/.*", IndexHandler)
+    ])
 
-@app.route("/<path:path>")
-def webapp(path):
-    return send_file("static/index.html")
+async def main():
+    app = make_app()
+    app.listen(5000)
+    await asyncio.Event().wait()
 
-app.run()
+if __name__ == "__main__":
+    asyncio.run(main())
