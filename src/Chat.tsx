@@ -78,19 +78,10 @@ export default function Chat() {
     setMessage(newMessage);
   };
 
-  const backlogText = () => {
-    let text = "";
-    for (let entry of backlog) {
-      text += `${entry.nickname}: ${entry.message}\n`
-    }
-
-    return text;
-  }
-
   return (
     <div className="flex flex-col mt-2 grow mx-8 text-lg">
       <h1 className="font-bold text-xl text-center">Messages</h1>
-      <div className="border dark:border-zinc-800 rounded-lg my-2 grow flex flex-col">
+      <div className="border dark:border-zinc-800 rounded-lg my-2 grow">
         <div className="px-2 py-1 border-b border-zinc-800">
           <p>
             Status:{" "}
@@ -99,12 +90,16 @@ export default function Chat() {
             </span>
           </p>
         </div>
-        <div className="px-2 py-1 grow flex flex-col">
-          <textarea
-            className="bg-transparent resize-none w-full h-max grow"
-            defaultValue={backlogText()}
-            disabled
-          />
+        <div className="px-2 py-1">
+          {backlog.map((entry, index) => (
+            <textarea
+              rows={1}
+              key={index}
+              defaultValue={entry.nickname + ": " + entry.message}
+              className="bg-transparent resize-none w-full h-max"
+              disabled
+            />
+          ))}
         </div>
       </div>
       <div className="pb-8 flex items-center">
