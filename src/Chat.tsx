@@ -1,4 +1,4 @@
-import { KeyboardEvent, useContext, useEffect, useState } from "react";
+import { KeyboardEvent, useContext, useEffect, useRef, useState } from "react";
 import { Textarea } from "./components/ui/textarea";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { Nickname, NicknameProps } from "./App";
@@ -22,6 +22,7 @@ export default function Chat() {
   const [message, setMessage] = useState("");
   const [backlog, setBacklog] = useState<BacklogEntry[]>([]);
   const nicknameCtx = useContext(Nickname) as NicknameProps;
+  const messagesContainer = useRef<HTMLDivElement | null>(null);
   const webSocketUrl =
     (window.location.protocol == "https:" ? "wss://" : "ws://") +
     window.location.host +
@@ -47,6 +48,13 @@ export default function Chat() {
     newBacklog.push(lastJsonMessage as BacklogEntry);
     setBacklog(newBacklog);
   }, [lastJsonMessage])
+
+  // Scroll down when a new message arrives
+  useEffect(() => {
+    if (!messagesContainer.current)
+      return;
+    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
+  }, [backlog])
 
   let connectionStatus: "connected" | "connecting" | "disconnected";
   if (readyState == ReadyState.OPEN) {
@@ -97,7 +105,7 @@ export default function Chat() {
           </p>
         </div>
         <div className="grow relative">
-          <div className="px-2 py-1 absolute top-0 overflow-y-scroll w-full h-full">
+          <div ref={messagesContainer} className="px-2 py-1 absolute top-0 overflow-y-scroll w-full h-full">
             {backlog.map((entry, index) => (
               <p key={index} className="whitespace-pre-line">
                 <span className="text-green-400">{entry.nickname}</span>: {entry.message}
