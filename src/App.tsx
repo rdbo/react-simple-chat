@@ -26,7 +26,7 @@ function App() {
           value={{ nickname: nickname, setNickname: setNickname }}
         >
           <div className="min-h-screen flex flex-col">
-            <header className="sticky top-0">
+            <header className="sticky top-0 z-50">
               <NavBar />
             </header>
             <main className="grow flex">
