@@ -35,7 +35,7 @@ class MessageSocketHandler(tornado.websocket.WebSocketHandler):
             if len(command["nickname"]) == 0 or len(command["message"]) == 0:
                 return
 
-            msg = { "nickname": command["nickname"], "message": command["message"] }
+            msg = { "nickname": command["nickname"], "ip_address": self.request.remote_ip, "message": command["message"] }
             MessageSocketHandler.backlog.append(msg)
             MessageSocketHandler.send_message(msg)
 

@@ -5,7 +5,7 @@ import { Nickname, NicknameProps } from "./App";
 
 interface BacklogEntry {
   nickname: string;
-  // ip_address: string;
+  ip_address: string;
   message: string;
 }
 
@@ -27,17 +27,17 @@ export default function Chat() {
     (window.location.protocol == "https:" ? "wss://" : "ws://") +
     window.location.host +
     "/api/websocket";
-  const { sendMessage, sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(webSocketUrl, {
-    onOpen: () => {
-      sendMessage("get_backlog");
-    },
-    shouldReconnect: () => true,
-  });
+  const { sendMessage, sendJsonMessage, lastJsonMessage, readyState } =
+    useWebSocket(webSocketUrl, {
+      onOpen: () => {
+        sendMessage("get_backlog");
+      },
+      shouldReconnect: () => true,
+    });
 
   // Update backlog with new messages
   useEffect(() => {
-    if (lastJsonMessage == null)
-      return;
+    if (lastJsonMessage == null) return;
 
     if (lastJsonMessage.hasOwnProperty("backlog")) {
       setBacklog((lastJsonMessage as BacklogResponse).backlog);
@@ -47,14 +47,14 @@ export default function Chat() {
     let newBacklog = [...backlog];
     newBacklog.push(lastJsonMessage as BacklogEntry);
     setBacklog(newBacklog);
-  }, [lastJsonMessage])
+  }, [lastJsonMessage]);
 
   // Scroll down when a new message arrives
   useEffect(() => {
-    if (!messagesContainer.current)
-      return;
-    messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
-  }, [backlog])
+    if (!messagesContainer.current) return;
+    messagesContainer.current.scrollTop =
+      messagesContainer.current.scrollHeight;
+  }, [backlog]);
 
   let connectionStatus: "connected" | "connecting" | "disconnected";
   if (readyState == ReadyState.OPEN) {
@@ -71,10 +71,12 @@ export default function Chat() {
   };
 
   const sendMessageToServer = () => {
-    if (readyState != ReadyState.OPEN || !message)
-      return;
+    if (readyState != ReadyState.OPEN || !message) return;
 
-    let cmd: SendMessageCommand = { nickname: nicknameCtx.nickname, message: message };
+    let cmd: SendMessageCommand = {
+      nickname: nicknameCtx.nickname,
+      message: message,
+    };
 
     sendJsonMessage(cmd);
     setMessage("");
@@ -105,10 +107,15 @@ export default function Chat() {
           </p>
         </div>
         <div className="grow relative">
-          <div ref={messagesContainer} className="px-2 py-1 absolute top-0 overflow-y-scroll w-full h-full">
+          <div
+            ref={messagesContainer}
+            className="px-2 py-1 absolute top-0 overflow-y-scroll w-full h-full"
+          >
             {backlog.map((entry, index) => (
               <p key={index} className="whitespace-pre-line">
-                <span className="text-green-400">{entry.nickname}</span>: {entry.message}
+                <span className="text-green-400">{entry.nickname}</span>@
+                <span className="text-blue-400">{entry.ip_address}</span>:{" "}
+                {entry.message}
               </p>
             ))}
           </div>
