@@ -117,8 +117,9 @@ export default function Chat() {
         <button
           className={"ml-2 rounded-full" + (message ? "" : " opacity-50")}
           disabled={!message}
+          onClick={sendMessageToServer}
         >
-          <img src="/assets/images/send-message.png" className="h-12" />
+          <img src="/assets/images/send-message.png" className="w-12 h-12" />
         </button>
       </div>
     </div>
