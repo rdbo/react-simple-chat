@@ -87,7 +87,7 @@ export default function Chat() {
   return (
     <div className="flex flex-col mt-2 grow mx-8 text-lg">
       <h1 className="font-bold text-xl text-center">Messages</h1>
-      <div className="border dark:border-zinc-800 rounded-lg my-2 grow">
+      <div className="border dark:border-zinc-800 rounded-lg my-2 grow flex flex-col">
         <div className="px-2 py-1 border-b border-zinc-800">
           <p>
             Status:{" "}
@@ -96,12 +96,14 @@ export default function Chat() {
             </span>
           </p>
         </div>
-        <div className="px-2 py-1">
-          {backlog.map((entry, index) => (
-            <p key={index} className="whitespace-pre-line">
-              <span className="text-green-400">{entry.nickname}</span>: {entry.message}
-            </p>
-          ))}
+        <div className="grow relative">
+          <div className="px-2 py-1 absolute top-0 overflow-y-scroll w-full h-full">
+            {backlog.map((entry, index) => (
+              <p key={index} className="whitespace-pre-line">
+                <span className="text-green-400">{entry.nickname}</span>: {entry.message}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
       <div className="pb-8 flex items-center">
