@@ -28,7 +28,7 @@ export default function Nick() {
   };
 
   const isNicknameValid = (nickname: string) => {
-    return nickname.match(/^[A-Za-z0-9_]+$/);
+    return nickname.length < 32 && nickname.match(/^[A-Za-z0-9_]+$/);
   };
 
   const validateAndUpdateNickname = (newNickname?: string) => {
@@ -37,13 +37,16 @@ export default function Nick() {
       return;
     }
 
-    if (newNickname.length > 32)
-      return;
-
     if (isNicknameValid(newNickname)) {
       setFormNickname(newNickname);
     }
   };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key == "Enter" && isNicknameValid(formNickname)) {
+      handleJoin();
+    }
+  }
 
   return (
     <div className="flex justify-center grow">
@@ -66,6 +69,7 @@ export default function Nick() {
               placeholder="John Doe"
               value={formNickname}
               onChange={(e) => validateAndUpdateNickname(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             {errorMsg.length > 0 && (
               <p className="text-red-500 text-sm my-2">{errorMsg}</p>
